@@ -1,0 +1,366 @@
+/* Simple, Light Login Design for Promittens CRM */
+
+body.crm-simple-login-page {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hide Frappe default navigation, header, breadcrumbs and footer */
+.crm-simple-login-page .navbar,
+.crm-simple-login-page .web-footer,
+.crm-simple-login-page footer,
+.crm-simple-login-page .page-breadcrumbs,
+.crm-simple-login-page .page-header {
+  display: none !important;
+}
+
+.crm-simple-login-page main.container,
+.crm-simple-login-page .page-content-wrapper,
+.crm-simple-login-page .page_content {
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  min-height: 100vh !important;
+}
+
+/* Main Centered Wrapper */
+.crm-login-wrap {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  box-sizing: border-box;
+  background-color: #f8fafc;
+}
+
+/* Simple Clean Card */
+.crm-simple-card {
+  width: 100%;
+  max-width: 390px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+  padding: 36px 32px;
+  box-sizing: border-box;
+}
+
+/* Card Header */
+.crm-simple-head {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.crm-simple-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  margin-bottom: 16px;
+}
+
+.crm-simple-logo svg {
+  width: 24px;
+  height: 24px;
+}
+
+.crm-simple-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.01em;
+}
+
+.crm-simple-subtitle {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Sections Toggling */
+section.for-login,
+section.for-forgot,
+section.for-login-with-email-link,
+section.for-signup,
+section.for-email-login {
+  width: 100%;
+}
+
+section.for-forgot,
+section.for-login-with-email-link,
+section.for-signup,
+section.for-email-login {
+  display: none;
+}
+
+/* Alert Banners */
+.login-error-banner,
+.login-success-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+  margin-bottom: 18px;
+}
+
+.login-error-banner {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.login-success-banner {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+}
+
+.login-error-banner.hidden,
+.login-success-banner.hidden {
+  display: none !important;
+}
+
+/* Form Elements */
+.crm-form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.crm-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.crm-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.crm-form-control {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #0f172a !important;
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 6px !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.crm-form-control::placeholder {
+  color: #94a3b8 !important;
+}
+
+.crm-form-control:focus {
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
+}
+
+.crm-form-group.invalid .crm-form-control {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12) !important;
+}
+
+.field-error {
+  font-size: 12px;
+  color: #dc2626;
+  margin: 4px 0 0 0;
+  min-height: 16px;
+}
+
+/* Toggle Password Visibility */
+.toggle-password {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+.toggle-password:hover {
+  color: #475569;
+}
+
+.toggle-password svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Helper Row */
+.crm-helper-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2px;
+  margin-bottom: 22px;
+  font-size: 13px;
+}
+
+.crm-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #475569;
+  cursor: pointer;
+  user-select: none;
+}
+
+.crm-checkbox-label input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.crm-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.crm-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* Submit CTA Button */
+.crm-btn-primary,
+.es-button[data-variant="solid"] {
+  width: 100% !important;
+  height: 40px !important;
+  background: #2563eb !important;
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  transition: background-color 0.15s ease !important;
+  box-sizing: border-box !important;
+  text-decoration: none !important;
+}
+
+.crm-btn-primary:hover,
+.es-button[data-variant="solid"]:hover {
+  background: #1d4ed8 !important;
+}
+
+.crm-btn-primary:active,
+.es-button[data-variant="solid"]:active {
+  background: #1e40af !important;
+}
+
+.crm-btn-primary:disabled,
+.es-button[data-variant="solid"]:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
+/* Secondary Button */
+.crm-btn-secondary,
+.btn-login-option {
+  width: 100% !important;
+  height: 38px !important;
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 6px !important;
+  color: #334155 !important;
+  font-family: inherit !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  margin-top: 10px !important;
+  text-decoration: none !important;
+  box-sizing: border-box !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+
+.crm-btn-secondary:hover,
+.btn-login-option:hover {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+/* Spinner */
+.es-spinner,
+.crm-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Card Footer */
+.crm-simple-footer {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #f1f5f9;
+  text-align: center;
+  font-size: 13px;
+  color: #64748b;
+}
+
+@media (max-width: 480px) {
+  .crm-simple-card {
+    padding: 28px 20px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+  }
+}

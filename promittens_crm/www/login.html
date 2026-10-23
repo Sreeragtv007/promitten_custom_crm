@@ -1,0 +1,291 @@
+{% extends "templates/web.html" %}
+
+{% block navbar %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block sidebar %}{% endblock %}
+
+{% block head_include %}
+<link rel="stylesheet" href="/assets/promittens_crm/css/login.css?v={{ build_version }}">
+{% endblock %}
+
+{% block page_content %}
+<div class="crm-login-wrap">
+	<div class="crm-simple-card">
+
+		<!-- ================= SIGN IN SECTION ================= -->
+		<section class="for-login">
+			<div class="crm-simple-head">
+				<div class="crm-simple-logo">
+					<!-- Clean Minimal CRM Lock/User Icon -->
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+						<circle cx="12" cy="7" r="4"></circle>
+					</svg>
+				</div>
+				<h2 class="crm-simple-title">{{ _("Sign In") }}</h2>
+				<p class="crm-simple-subtitle">{{ _("Enter your email and password to access your account.") }}</p>
+			</div>
+
+			<!-- Error & Success Alert Banners -->
+			<div class="login-error-banner hidden" role="alert">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+					<circle cx="12" cy="12" r="10"></circle>
+					<line x1="12" y1="8" x2="12" y2="12"></line>
+					<line x1="12" y1="16" x2="12.01" y2="16"></line>
+				</svg>
+				<span class="error-banner-text">Invalid login credentials.</span>
+			</div>
+
+			<div class="login-success-banner hidden" role="status">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+					<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+					<polyline points="22 4 12 14.01 9 11.01"></polyline>
+				</svg>
+				<span class="success-banner-text">Success! Redirecting...</span>
+			</div>
+
+			<form class="form-signin form-login page-card-body" role="form" novalidate>
+				<div class="crm-form-group">
+					<label class="crm-label" for="login_email">{{ login_label or _("Email Address") }}</label>
+					<div class="crm-input-wrapper">
+						<input type="text" id="login_email" class="form-control crm-form-control"
+							placeholder="{% if login_name_placeholder %}{{ login_name_placeholder }}{% else %}jane@example.com{% endif %}"
+							required autofocus autocomplete="username">
+					</div>
+					<p class="field-error"></p>
+				</div>
+
+				<div class="crm-form-group">
+					<label class="crm-label" for="login_password">{{ _("Password") }}</label>
+					<div class="crm-input-wrapper">
+						<input type="password" id="login_password" class="form-control crm-form-control"
+							placeholder="••••••••" autocomplete="current-password" required>
+						<button type="button" class="toggle-password" data-target="#login_password" aria-label="Toggle password visibility">
+							<svg class="eye-open-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+								<circle cx="12" cy="12" r="3"></circle>
+							</svg>
+							<svg class="eye-closed-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+								<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+								<line x1="1" y1="1" x2="23" y2="23"></line>
+							</svg>
+						</button>
+					</div>
+					<p class="field-error"></p>
+				</div>
+
+				<div class="crm-helper-row">
+					<label class="crm-checkbox-label">
+						<input type="checkbox" id="remember_me" checked>
+						<span>{{ _("Remember me") }}</span>
+					</label>
+					{% if not disable_user_pass_login %}
+					<a href="#forgot" class="crm-link">{{ _("Forgot password?") }}</a>
+					{% endif %}
+				</div>
+
+				<div class="page-card-actions">
+					<button class="crm-btn-primary es-button" data-variant="solid" type="submit">
+						{{ _("Sign In") }}
+					</button>
+
+					{% if ldap_settings and ldap_settings.enabled %}
+					<button class="crm-btn-secondary es-button btn-ldap-login" data-variant="solid" type="button">
+						{{ _("Login with LDAP") }}
+					</button>
+					{% endif %}
+
+					{% if login_with_email_link %}
+					<a href="#login-with-email-link" class="crm-btn-secondary btn-login-option">
+						{{ _("Login with Email Link") }}
+					</a>
+					{% endif %}
+
+					{% if social_login %}
+					<div class="social-logins" style="margin-top: 14px;">
+						{% for provider in provider_logins %}
+						<a href="{{ provider.auth_url }}" class="crm-btn-secondary btn-login-option btn-{{ provider.name }}">
+							{% if provider.icon %}{{ provider.icon }}{% endif %}
+							{{ _("Login with {0}").format(provider.provider_name) }}
+						</a>
+						{% endfor %}
+					</div>
+					{% endif %}
+				</div>
+			</form>
+
+			{% if not disable_signup and not disable_user_pass_login %}
+			<div class="crm-simple-footer">
+				<span>{{ _("Don't have an account?") }}</span>
+				<a href="#signup" class="crm-link" style="margin-left: 4px;">{{ _("Sign up") }}</a>
+			</div>
+			{% endif %}
+		</section>
+
+		<!-- ================= FORGOT PASSWORD SECTION ================= -->
+		<section class="for-forgot">
+			<div class="crm-simple-head">
+				<div class="crm-simple-logo">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+						<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+					</svg>
+				</div>
+				<h2 class="crm-simple-title">{{ _("Forgot Password") }}</h2>
+				<p class="crm-simple-subtitle">{{ _("Enter your email and we'll send you a password reset link.") }}</p>
+			</div>
+
+			<div class="login-error-banner hidden" role="alert">
+				<span class="error-banner-text"></span>
+			</div>
+
+			<div class="login-success-banner hidden" role="status">
+				<span class="success-banner-text">{{ _("Password reset instructions have been sent.") }}</span>
+			</div>
+
+			<form class="form-signin form-forgot page-card-body" role="form" novalidate>
+				<div class="crm-form-group">
+					<label class="crm-label" for="forgot_email">{{ _("Email Address") }}</label>
+					<div class="crm-input-wrapper">
+						<input type="email" id="forgot_email" class="form-control crm-form-control"
+							placeholder="jane@example.com" required autofocus autocomplete="email">
+					</div>
+					<p class="field-error"></p>
+				</div>
+
+				<div class="page-card-actions">
+					<button class="crm-btn-primary es-button btn-forgot" data-variant="solid" type="submit" disabled>
+						{{ _("Send Reset Link") }}
+					</button>
+					<a href="#login" class="crm-btn-secondary btn-login-option">
+						{{ _("Back to Sign In") }}
+					</a>
+				</div>
+			</form>
+		</section>
+
+		<!-- ================= EMAIL LINK LOGIN SECTION ================= -->
+		<section class="for-login-with-email-link">
+			<div class="crm-simple-head">
+				<div class="crm-simple-logo">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+						<polyline points="22,6 12,13 2,6"></polyline>
+					</svg>
+				</div>
+				<h2 class="crm-simple-title">{{ _("Sign In with Email Link") }}</h2>
+				<p class="crm-simple-subtitle">{{ _("We will email you a secure link to sign in without password.") }}</p>
+			</div>
+
+			<div class="login-error-banner hidden" role="alert">
+				<span class="error-banner-text"></span>
+			</div>
+
+			<div class="login-success-banner hidden" role="status">
+				<span class="success-banner-text">{{ _("Check your email for the sign-in link.") }}</span>
+			</div>
+
+			<form class="form-signin form-login-with-email-link page-card-body" role="form" novalidate>
+				<div class="crm-form-group">
+					<label class="crm-label" for="login_with_email_link_email">{{ _("Email Address") }}</label>
+					<div class="crm-input-wrapper">
+						<input type="email" id="login_with_email_link_email" class="form-control crm-form-control"
+							placeholder="jane@example.com" required autofocus autocomplete="email">
+					</div>
+					<p class="field-error"></p>
+				</div>
+
+				<div class="page-card-actions">
+					<button class="crm-btn-primary es-button btn-login-with-email-link" data-variant="solid" type="submit">
+						{{ _("Send Login Link") }}
+					</button>
+					<a href="#login" class="crm-btn-secondary btn-login-option">
+						{{ _("Sign In with Password") }}
+					</a>
+				</div>
+			</form>
+		</section>
+
+		<!-- ================= SIGN UP SECTION ================= -->
+		<section class="for-signup {{ 'signup-disabled' if disable_signup else '' }}">
+			<div class="crm-simple-head">
+				<h2 class="crm-simple-title">{{ _("Create Account") }}</h2>
+				<p class="crm-simple-subtitle">{{ _("Sign up to access the workspace.") }}</p>
+			</div>
+
+			{% if not disable_signup %}
+			{{ signup_form_template }}
+			<div class="crm-simple-footer">
+				<span>{{ _("Already have an account?") }}</span>
+				<a href="#login" class="crm-link" style="margin-left: 4px;">{{ _("Sign in") }}</a>
+			</div>
+			{% else %}
+			<div class="text-center" style="padding: 16px 0;">
+				<p style="color: #64748b; font-size: 14px;">{{ _("Signups are currently disabled.") }}</p>
+				<a href="#login" class="crm-btn-primary es-button" data-variant="solid">{{ _("Return to Sign In") }}</a>
+			</div>
+			{% endif %}
+		</section>
+
+	</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>{% include "templates/includes/login/login.js" %}</script>
+<script>
+frappe.ready(function () {
+	// Add simple login page class to body
+	document.body.classList.add("crm-simple-login-page");
+
+	// Password toggle eye icon
+	$(document).on("click", ".toggle-password", function (e) {
+		e.preventDefault();
+		var targetSelector = $(this).attr("data-target") || "#login_password";
+		var $target = $(targetSelector);
+		var $eyeOpen = $(this).find(".eye-open-icon");
+		var $eyeClosed = $(this).find(".eye-closed-icon");
+
+		if ($target.attr("type") === "password") {
+			$target.attr("type", "text");
+			$eyeOpen.hide();
+			$eyeClosed.show();
+		} else {
+			$target.attr("type", "password");
+			$eyeOpen.show();
+			$eyeClosed.hide();
+		}
+	});
+
+	// Dynamic forgot button enable
+	$("#forgot_email").on("input", function () {
+		var val = ($(this).val() || "").trim();
+		$(".form-forgot .btn-forgot").prop("disabled", val.length === 0);
+	});
+
+	// Clear invalid alerts on input
+	$(".crm-form-control").on("input", function () {
+		$(this).closest(".crm-form-group").removeClass("invalid").find(".field-error").text("");
+		$(".login-error-banner").addClass("hidden");
+	});
+
+	// Sync error message into banner text
+	var originalSetInvalid = login.set_invalid;
+	if (originalSetInvalid) {
+		login.set_invalid = function (message) {
+			originalSetInvalid(message);
+			var $banner = $("section:visible .login-error-banner");
+			if ($banner.length) {
+				$banner.find(".error-banner-text").html(message || "Invalid credentials. Please verify your login.");
+				$banner.removeClass("hidden");
+			}
+		};
+	}
+
+	// Trigger initial routing based on hash
+	if (window.login && window.login.route) {
+		window.login.route();
+	}
+});
+</script>
+{% endblock %}
