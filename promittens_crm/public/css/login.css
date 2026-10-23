@@ -197,12 +197,19 @@ section.for-email-login {
   min-height: 16px;
 }
 
-/* Toggle Password Visibility */
-.toggle-password {
+/* Password input specific padding so text doesn't run into eye button */
+.crm-password-input {
+  padding-right: 42px !important;
+}
+
+/* Toggle Password Visibility Eye Button */
+.crm-toggle-password {
   position: absolute;
-  right: 8px;
-  background: none;
-  border: none;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent !important;
+  border: none !important;
   cursor: pointer;
   color: #94a3b8;
   display: flex;
@@ -211,15 +218,18 @@ section.for-email-login {
   padding: 6px;
   border-radius: 4px;
   transition: color 0.15s ease;
+  z-index: 10;
+  outline: none;
 }
 
-.toggle-password:hover {
-  color: #475569;
+.crm-toggle-password:hover {
+  color: #1e293b;
 }
 
-.toggle-password svg {
-  width: 16px;
-  height: 16px;
+.crm-toggle-password svg {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
 }
 
 /* Helper Row */

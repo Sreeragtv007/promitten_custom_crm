@@ -58,9 +58,9 @@
 				<div class="crm-form-group">
 					<label class="crm-label" for="login_password">{{ _("Password") }}</label>
 					<div class="crm-input-wrapper">
-						<input type="password" id="login_password" class="form-control crm-form-control"
+						<input type="password" id="login_password" class="form-control crm-form-control crm-password-input"
 							placeholder="••••••••" autocomplete="current-password" required>
-						<button type="button" class="toggle-password" toggle="#login_password" data-target="#login_password" aria-label="Toggle password visibility">
+						<button type="button" class="crm-toggle-password" data-target="#login_password" aria-label="Toggle password visibility">
 							<svg class="eye-open-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 								<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
 								<circle cx="12" cy="7" r="3"></circle>
@@ -263,19 +263,21 @@ frappe.ready(function () {
 	});
 
 	// --- 2. PASSWORD TOGGLE EYE HANDLER ---
-	$(document).on("click", ".toggle-password", function (e) {
+	$(document).on("click", ".crm-toggle-password", function (e) {
 		e.preventDefault();
-		var targetSelector = $(this).attr("data-target") || $(this).attr("toggle") || "#login_password";
-		var $target = $(targetSelector);
+		e.stopPropagation();
+		var targetSelector = $(this).attr("data-target") || "#login_password";
+		var $input = $(targetSelector);
 		var $eyeOpen = $(this).find(".eye-open-icon");
 		var $eyeClosed = $(this).find(".eye-closed-icon");
 
-		if ($target.attr("type") === "password") {
-			$target.attr("type", "text");
+		var isPassword = $input.attr("type") === "password";
+		if (isPassword) {
+			$input.attr("type", "text");
 			$eyeOpen.hide();
 			$eyeClosed.show();
 		} else {
-			$target.attr("type", "password");
+			$input.attr("type", "password");
 			$eyeOpen.show();
 			$eyeClosed.hide();
 		}
