@@ -12,7 +12,7 @@
 <div class="crm-login-wrap">
 	<div class="crm-simple-card">
 
-		<!-- ================= SIGN IN SECTION ================= -->
+		<!-- ================= 1. SIGN IN SECTION ================= -->
 		<section class="for-login">
 			<div class="crm-simple-head">
 				<div class="crm-simple-logo">
@@ -33,7 +33,7 @@
 					<line x1="12" y1="8" x2="12" y2="12"></line>
 					<line x1="12" y1="16" x2="12.01" y2="16"></line>
 				</svg>
-				<span class="error-banner-text">Invalid login credentials.</span>
+				<span class="es-alert__title error-banner-text">{{ _("Invalid login credentials.") }}</span>
 			</div>
 
 			<div class="login-success-banner hidden" role="status">
@@ -41,7 +41,7 @@
 					<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
 					<polyline points="22 4 12 14.01 9 11.01"></polyline>
 				</svg>
-				<span class="success-banner-text">Success! Redirecting...</span>
+				<span class="es-alert__title success-banner-text">{{ _("Success! Redirecting...") }}</span>
 			</div>
 
 			<form class="form-signin form-login page-card-body" role="form" novalidate>
@@ -60,10 +60,10 @@
 					<div class="crm-input-wrapper">
 						<input type="password" id="login_password" class="form-control crm-form-control"
 							placeholder="••••••••" autocomplete="current-password" required>
-						<button type="button" class="toggle-password" data-target="#login_password" aria-label="Toggle password visibility">
+						<button type="button" class="toggle-password" toggle="#login_password" data-target="#login_password" aria-label="Toggle password visibility">
 							<svg class="eye-open-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 								<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-								<circle cx="12" cy="12" r="3"></circle>
+								<circle cx="12" cy="7" r="3"></circle>
 							</svg>
 							<svg class="eye-closed-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
 								<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
@@ -76,7 +76,7 @@
 
 				<div class="crm-helper-row">
 					<label class="crm-checkbox-label">
-						<input type="checkbox" id="remember_me" checked>
+						<input type="checkbox" id="remember_me">
 						<span>{{ _("Remember me") }}</span>
 					</label>
 					{% if not disable_user_pass_login %}
@@ -122,7 +122,7 @@
 			{% endif %}
 		</section>
 
-		<!-- ================= FORGOT PASSWORD SECTION ================= -->
+		<!-- ================= 2. FORGOT PASSWORD SECTION ================= -->
 		<section class="for-forgot">
 			<div class="crm-simple-head">
 				<div class="crm-simple-logo">
@@ -136,11 +136,11 @@
 			</div>
 
 			<div class="login-error-banner hidden" role="alert">
-				<span class="error-banner-text"></span>
+				<span class="es-alert__title error-banner-text"></span>
 			</div>
 
 			<div class="login-success-banner hidden" role="status">
-				<span class="success-banner-text">{{ _("Password reset instructions have been sent.") }}</span>
+				<span class="es-alert__title success-banner-text">{{ _("Password reset instructions have been sent.") }}</span>
 			</div>
 
 			<form class="form-signin form-forgot page-card-body" role="form" novalidate>
@@ -164,7 +164,7 @@
 			</form>
 		</section>
 
-		<!-- ================= EMAIL LINK LOGIN SECTION ================= -->
+		<!-- ================= 3. EMAIL LINK LOGIN SECTION ================= -->
 		<section class="for-login-with-email-link">
 			<div class="crm-simple-head">
 				<div class="crm-simple-logo">
@@ -178,11 +178,11 @@
 			</div>
 
 			<div class="login-error-banner hidden" role="alert">
-				<span class="error-banner-text"></span>
+				<span class="es-alert__title error-banner-text"></span>
 			</div>
 
 			<div class="login-success-banner hidden" role="status">
-				<span class="success-banner-text">{{ _("Check your email for the sign-in link.") }}</span>
+				<span class="es-alert__title success-banner-text">{{ _("Check your email for the sign-in link.") }}</span>
 			</div>
 
 			<form class="form-signin form-login-with-email-link page-card-body" role="form" novalidate>
@@ -196,6 +196,9 @@
 				</div>
 
 				<div class="page-card-actions">
+					<p class="resend-link hidden" style="margin-bottom: 12px; font-size: 13px; color: #64748b; text-align: center;">
+						{{ _("Didn't receive the link?") }} <a href="#" class="btn-resend-link crm-link">{{ _("Resend") }}</a>
+					</p>
 					<button class="crm-btn-primary es-button btn-login-with-email-link" data-variant="solid" type="submit">
 						{{ _("Send Login Link") }}
 					</button>
@@ -206,7 +209,7 @@
 			</form>
 		</section>
 
-		<!-- ================= SIGN UP SECTION ================= -->
+		<!-- ================= 4. SIGN UP SECTION ================= -->
 		<section class="for-signup {{ 'signup-disabled' if disable_signup else '' }}">
 			<div class="crm-simple-head">
 				<h2 class="crm-simple-title">{{ _("Create Account") }}</h2>
@@ -238,10 +241,31 @@ frappe.ready(function () {
 	// Add simple login page class to body
 	document.body.classList.add("crm-simple-login-page");
 
-	// Password toggle eye icon
+	// --- 1. REMEMBER ME FUNCTIONALITY ---
+	var REMEMBER_KEY = "crm_remembered_username";
+	var savedUsername = localStorage.getItem(REMEMBER_KEY);
+	if (savedUsername) {
+		$("#login_email").val(savedUsername);
+		$("#remember_me").prop("checked", true);
+		if (!$("#login_password").val()) {
+			$("#login_password").focus();
+		}
+	}
+
+	// Hook into login submission to persist or clear remembered username
+	$(".form-login").on("submit", function () {
+		var usr = ($("#login_email").val() || "").trim();
+		if ($("#remember_me").is(":checked") && usr) {
+			localStorage.setItem(REMEMBER_KEY, usr);
+		} else {
+			localStorage.removeItem(REMEMBER_KEY);
+		}
+	});
+
+	// --- 2. PASSWORD TOGGLE EYE HANDLER ---
 	$(document).on("click", ".toggle-password", function (e) {
 		e.preventDefault();
-		var targetSelector = $(this).attr("data-target") || "#login_password";
+		var targetSelector = $(this).attr("data-target") || $(this).attr("toggle") || "#login_password";
 		var $target = $(targetSelector);
 		var $eyeOpen = $(this).find(".eye-open-icon");
 		var $eyeClosed = $(this).find(".eye-closed-icon");
@@ -257,32 +281,24 @@ frappe.ready(function () {
 		}
 	});
 
-	// Dynamic forgot button enable
+	// --- 3. DYNAMIC FORGOT & EMAIL-LINK INPUT ENABLERS ---
 	$("#forgot_email").on("input", function () {
 		var val = ($(this).val() || "").trim();
 		$(".form-forgot .btn-forgot").prop("disabled", val.length === 0);
 	});
 
-	// Clear invalid alerts on input
+	$("#login_with_email_link_email").on("input", function () {
+		var val = ($(this).val() || "").trim();
+		$(".form-login-with-email-link .btn-login-with-email-link").prop("disabled", val.length === 0);
+	});
+
+	// --- 4. CLEAR INVALID ALERTS ON INPUT ---
 	$(".crm-form-control").on("input", function () {
 		$(this).closest(".crm-form-group").removeClass("invalid").find(".field-error").text("");
 		$(".login-error-banner").addClass("hidden");
 	});
 
-	// Sync error message into banner text
-	var originalSetInvalid = login.set_invalid;
-	if (originalSetInvalid) {
-		login.set_invalid = function (message) {
-			originalSetInvalid(message);
-			var $banner = $("section:visible .login-error-banner");
-			if ($banner.length) {
-				$banner.find(".error-banner-text").html(message || "Invalid credentials. Please verify your login.");
-				$banner.removeClass("hidden");
-			}
-		};
-	}
-
-	// Trigger initial routing based on hash
+	// --- 5. INITIAL HASH ROUTE ---
 	if (window.login && window.login.route) {
 		window.login.route();
 	}
