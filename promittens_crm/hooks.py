@@ -11,7 +11,7 @@ app_license = "mit"
 
 doc_events = {
 	"CRM Lead": {
-		"after_insert": "promittens_crm.events.lead.on_lead_after_insert",
+		"after_insert": "promittens_crm.events.welcome_email.on_lead_after_insert",
 	},
 	"Communication": {
 		"after_insert": "promittens_crm.events.communication.on_communication_after_insert",

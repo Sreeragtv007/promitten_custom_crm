@@ -1,5 +1,5 @@
 import frappe
-from promittens_crm.events.lead import update_lead_status_to_contacted
+from promittens_crm.events.lead_status import update_lead_status_to_contacted
 
 
 def on_communication_after_insert(doc, method=None):

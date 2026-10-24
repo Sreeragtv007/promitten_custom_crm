@@ -158,3 +158,37 @@ class TestLeadWelcomeEmail(unittest.TestCase):
 				mock_sendmail.assert_not_called()
 		finally:
 			frappe.flags.in_import = False
+
+	def test_timeline_comment_created_with_comment_type(self):
+		"""
+		Tests that welcome email comments are stored with comment_type='Comment'
+		so Frappe CRM's frontend Comments tab and Activity feed display them.
+		"""
+		with patch("frappe.sendmail"):
+			lead = self.create_lead(email="comment_test@example.com")
+			comments = frappe.get_all(
+				"Comment",
+				filters={"reference_name": lead.name, "comment_type": "Comment"},
+				fields=["name", "content"]
+			)
+			self.assertTrue(len(comments) >= 1)
+			self.assertIn("Welcome email queued", comments[0].content)
+
+	def test_modular_and_backward_compatible_exports(self):
+		"""
+		Tests that both modular imports and backward-compatible lead.py re-exports function identically.
+		"""
+		from promittens_crm.utils import add_lead_timeline_comment, get_custom_crm_settings
+		from promittens_crm.events.welcome_email import on_lead_after_insert as welcome_hook
+		from promittens_crm.events.lead_status import update_lead_status_to_contacted as status_fn
+		from promittens_crm.events.lead import (
+			on_lead_after_insert as compat_welcome_hook,
+			update_lead_status_to_contacted as compat_status_fn,
+			add_lead_timeline_comment as compat_comment_fn,
+			get_custom_crm_settings as compat_settings_fn,
+		)
+
+		self.assertIs(welcome_hook, compat_welcome_hook)
+		self.assertIs(status_fn, compat_status_fn)
+		self.assertIs(add_lead_timeline_comment, compat_comment_fn)
+		self.assertIs(get_custom_crm_settings, compat_settings_fn)
