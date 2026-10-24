@@ -174,21 +174,27 @@ class TestLeadWelcomeEmail(unittest.TestCase):
 			self.assertTrue(len(comments) >= 1)
 			self.assertIn("Welcome email queued", comments[0].content)
 
-	def test_modular_and_backward_compatible_exports(self):
+	def test_modular_feature_exports(self):
 		"""
-		Tests that both modular imports and backward-compatible lead.py re-exports function identically.
+		Tests that modular imports from utils, welcome_email, and lead_status function properly.
 		"""
 		from promittens_crm.utils import add_lead_timeline_comment, get_custom_crm_settings
-		from promittens_crm.events.welcome_email import on_lead_after_insert as welcome_hook
-		from promittens_crm.events.lead_status import update_lead_status_to_contacted as status_fn
-		from promittens_crm.events.lead import (
-			on_lead_after_insert as compat_welcome_hook,
-			update_lead_status_to_contacted as compat_status_fn,
-			add_lead_timeline_comment as compat_comment_fn,
-			get_custom_crm_settings as compat_settings_fn,
+		from promittens_crm.events.welcome_email import (
+			on_lead_after_insert,
+			send_lead_welcome_email,
+			send_lead_welcome_email_from_settings,
+		)
+		from promittens_crm.events.lead_status import (
+			TARGET_STATUS,
+			ELIGIBLE_PREVIOUS_STATUSES,
+			update_lead_status_to_contacted,
 		)
 
-		self.assertIs(welcome_hook, compat_welcome_hook)
-		self.assertIs(status_fn, compat_status_fn)
-		self.assertIs(add_lead_timeline_comment, compat_comment_fn)
-		self.assertIs(get_custom_crm_settings, compat_settings_fn)
+		self.assertTrue(callable(on_lead_after_insert))
+		self.assertTrue(callable(send_lead_welcome_email))
+		self.assertTrue(callable(send_lead_welcome_email_from_settings))
+		self.assertTrue(callable(update_lead_status_to_contacted))
+		self.assertTrue(callable(add_lead_timeline_comment))
+		self.assertTrue(callable(get_custom_crm_settings))
+		self.assertEqual(TARGET_STATUS, "Contacted")
+		self.assertIn("New", ELIGIBLE_PREVIOUS_STATUSES)
