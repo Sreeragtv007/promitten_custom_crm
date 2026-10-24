@@ -88,7 +88,7 @@ def add_lead_timeline_comment(doc, text: str):
 	"""
 	try:
 		if doc and hasattr(doc, "add_comment") and not getattr(frappe.flags, "in_import", False):
-			doc.add_comment("Info", text)
+			doc.add_comment("Comment", text)
 	except Exception:
 		pass
 
