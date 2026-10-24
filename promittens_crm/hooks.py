@@ -10,6 +10,9 @@ app_license = "mit"
 # Hook on document methods and events
 
 doc_events = {
+	"CRM Lead": {
+		"after_insert": "promittens_crm.events.lead.on_lead_after_insert",
+	},
 	"Communication": {
 		"after_insert": "promittens_crm.events.communication.on_communication_after_insert",
 		"on_update": "promittens_crm.events.communication.on_communication_update",

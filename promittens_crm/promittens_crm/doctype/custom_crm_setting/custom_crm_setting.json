@@ -1,0 +1,71 @@
+{
+ "actions": [],
+ "creation": "2026-10-24 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "welcome_email_section",
+  "enable_welcome_email",
+  "welcome_email_subject",
+  "welcome_email_message"
+ ],
+ "fields": [
+  {
+   "fieldname": "welcome_email_section",
+   "fieldtype": "Section Break",
+   "label": "Welcome Email Settings"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_welcome_email",
+   "fieldtype": "Check",
+   "label": "Enable Welcome Email"
+  },
+  {
+   "default": "Thank you for contacting us",
+   "depends_on": "enable_welcome_email",
+   "fieldname": "welcome_email_subject",
+   "fieldtype": "Data",
+   "label": "Welcome Email Subject"
+  },
+  {
+   "default": "Thank you for contacting us. We are looking forward to work with you. We will contact you for more details as soon as possible",
+   "depends_on": "enable_welcome_email",
+   "fieldname": "welcome_email_message",
+   "fieldtype": "Small Text",
+   "label": "Welcome Email Message"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-10-24 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Promittens Crm",
+ "name": "Custom CRM Setting",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Sales Manager",
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Sales User"
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
