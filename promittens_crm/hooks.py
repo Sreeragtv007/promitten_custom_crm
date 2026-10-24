@@ -22,3 +22,7 @@ doc_events = {
 		"on_update": "promittens_crm.events.call_log.on_call_log_update",
 	},
 }
+
+# Website
+# -------
+home_page = "login"
