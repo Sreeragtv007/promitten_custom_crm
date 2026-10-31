@@ -73,6 +73,10 @@ def send_lead_welcome_email(doc, recipient_email: str, subject: str, message: st
 	if not subject or not message:
 		return False
 
+	first_name = (getattr(doc, "first_name", None) or "").strip()
+	if first_name:
+		message = f"Hello {first_name},\n\n{message}"
+
 	try:
 		frappe.sendmail(
 			recipients=[recipient_email],

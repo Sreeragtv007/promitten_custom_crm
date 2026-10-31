@@ -1,8 +1,8 @@
-import unittest
 import frappe
+from frappe.tests.utils import FrappeTestCase
 
 
-class TestLeadStatusAutomation(unittest.TestCase):
+class TestLeadStatusAutomation(FrappeTestCase):
 	def setUp(self):
 		frappe.set_user("Administrator")
 		# Ensure default statuses exist

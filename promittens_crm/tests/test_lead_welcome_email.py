@@ -1,6 +1,7 @@
-import unittest
 from unittest.mock import patch
+
 import frappe
+from frappe.tests.utils import FrappeTestCase
 
 TEST_WELCOME_SUBJECT = "Thank you for contacting us"
 TEST_WELCOME_MESSAGE = (
@@ -9,7 +10,7 @@ TEST_WELCOME_MESSAGE = (
 )
 
 
-class TestLeadWelcomeEmail(unittest.TestCase):
+class TestLeadWelcomeEmail(FrappeTestCase):
 	def setUp(self):
 		frappe.set_user("Administrator")
 		# Ensure default statuses exist
@@ -51,7 +52,7 @@ class TestLeadWelcomeEmail(unittest.TestCase):
 			_, sendmail_kwargs = mock_sendmail.call_args
 			self.assertEqual(sendmail_kwargs.get("recipients"), [test_email])
 			self.assertEqual(sendmail_kwargs.get("subject"), TEST_WELCOME_SUBJECT)
-			self.assertEqual(sendmail_kwargs.get("message"), TEST_WELCOME_MESSAGE)
+			self.assertEqual(sendmail_kwargs.get("message"), f"Hello Jane,\n\n{TEST_WELCOME_MESSAGE}")
 			self.assertEqual(sendmail_kwargs.get("reference_doctype"), "CRM Lead")
 			self.assertEqual(sendmail_kwargs.get("reference_name"), lead.name)
 
@@ -79,7 +80,7 @@ class TestLeadWelcomeEmail(unittest.TestCase):
 			mock_sendmail.assert_called_once()
 			_, sendmail_kwargs = mock_sendmail.call_args
 			self.assertEqual(sendmail_kwargs.get("subject"), custom_subject)
-			self.assertEqual(sendmail_kwargs.get("message"), custom_message)
+			self.assertEqual(sendmail_kwargs.get("message"), f"Hello Jane,\n\n{custom_message}")
 
 	def test_custom_crm_setting_disables_email(self):
 		"""
